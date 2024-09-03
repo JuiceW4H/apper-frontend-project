@@ -1,8 +1,11 @@
+import { Form, useFetcher } from "react-router-dom";
 import { calculateSpentByBudget, formatCurrency, formatPercentage } from "../helpers";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
-const BudgetItem = ({budget}) => {
+const BudgetItem = ({budget, expense, showDelete = true}) => {
   const {id, name, amount, color} = budget;
   const spent = calculateSpentByBudget(id);
+  const fetcher = useFetcher()
 
     return (
     <div className="budget" style={{"--accent": color}}>
@@ -17,6 +20,27 @@ const BudgetItem = ({budget}) => {
             <small>{formatCurrency(spent)}spent</small>
             <small>{formatCurrency(amount - spent)}remaining</small>
         </div>
+        <div className="flex-sm">
+          {
+            showDelete && (
+            <fetcher.Form
+              method="post"
+              onSubmit={(event) => {
+                if (!confirm("Are you sure you want to delete this budget?")) {
+                  event.preventDefault()
+                }
+              }}>
+                <input type="hidden" name="_action" value="deleteBudget" />
+                <input type="hidden" name="budgetId" value={budget.id} />
+              <button type="submit" className="btn btn--warning">
+                <span>Delete Budget</span>
+                <TrashIcon width={20} />
+              </button>
+
+            </fetcher.Form>
+          )
+        }
+      </div>
     </div>
   )
 }

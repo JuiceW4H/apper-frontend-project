@@ -21,7 +21,7 @@ const AddBudgetForm = () => {
   return (
     <div className="form-wrapper">
         <h2 className="h3">
-            Create budget
+            Create Budget
         </h2>
         <fetcher.Form method="post" className="grid-sm" ref={formRef}>
            <div className="grid-sm">
@@ -39,7 +39,7 @@ const AddBudgetForm = () => {
            {
             isSubmitting ? <span>Submitting…</span> : (
               <>
-                <span>Create budget</span>
+                <span>Create Budget</span>
                 <CurrencyDollarIcon width={20} />
               </>
             )
